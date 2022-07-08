@@ -1,0 +1,9 @@
+FROM registry.fedoraproject.org/fedora:36
+RUN dnf -y install jq postgresql python3-pip python3-devel && \
+    dnf clean all && \
+    pip3 install pgcli
+
+WORKDIR /app
+COPY shell.sh .
+
+ENTRYPOINT ["/app/shell.sh"]
