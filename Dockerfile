@@ -1,5 +1,5 @@
-FROM docker.io/debian:11
-RUN apt update && apt -yqq install jq postgresql-client-13
+FROM registry.fedoraproject.org/fedora:36
+RUN dnf -y install jq postgresql && dnf clean all
 
 WORKDIR /app
 COPY shell.sh .
