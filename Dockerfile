@@ -4,4 +4,4 @@ RUN dnf -y install jq postgresql redis && dnf clean all
 WORKDIR /app
 COPY bin/ .
 
-ENTRYPOINT ["/app/bin/db_shell.sh"]
+ENTRYPOINT ["/app/db_shell.sh"]
