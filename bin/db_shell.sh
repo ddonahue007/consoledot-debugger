@@ -14,8 +14,4 @@ export PGHOST=$(cat $ACG_CONFIG | jq .database.hostname | tr -d '"')
 export PGPORT=$(cat $ACG_CONFIG | jq .database.port | tr -d '"')
 export PGDATABASE=$(cat $ACG_CONFIG | jq .database.name | tr -d '"')
 
-if [[ -z $1 ]]; then
-    psql 
-else
-    pgcli
-fi
+psql 
