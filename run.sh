@@ -1,3 +1,9 @@
 #!/usr/bin/env bash 
+set -x
 
-oc debug deploy/sources-api-svc -t --image quay.io/jlindgren/consoledot-debugger:master -- /app/db_shell.sh
+if [[ -z $1 ]]; then
+    echo "need db secret"
+    exit 1
+fi
+
+cat ./templates/db-debug-pod.yml | sed "s/DBSECRET/$1/g" | k create -f - 
