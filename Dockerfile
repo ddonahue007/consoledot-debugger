@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:36
+FROM registry.fedoraproject.org/fedora:37
 RUN dnf -y install jq postgresql redis && dnf clean all
 
 WORKDIR /app
