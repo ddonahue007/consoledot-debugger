@@ -5,6 +5,9 @@ metadata:
     openshift.io/scc: anyuid
   name: db-debug
 spec:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 1000
   containers:
   - command:
     - tail
@@ -41,12 +44,13 @@ spec:
     name: db-debugger
     resources:
       limits:
-        cpu: 100m
-        memory: 512Mi
+        cpu: 500m
+        memory: 1Gi
       requests:
         cpu: 50m
         memory: 128Mi
     stdin: true
     stdinOnce: true
     tty: true
+    imagePullPolicy: Always
   restartPolicy: Never
