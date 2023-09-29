@@ -6,7 +6,7 @@ if [[ -z $1 ]]; then
     exit 1
 fi
 
-cat ./templates/db-debug-pod.yml | sed "s/DBSECRET/$1/g" | k create -f - 
+cat ./templates/db-debug-pod.yml | sed "s/DBSECRET/$1/g" | kubectl create -f - 
 
 kubectl wait --for=condition=Ready pod/db-debug
 kubectl exec -it db-debug -- bash
