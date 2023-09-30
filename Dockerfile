@@ -1,5 +1,5 @@
-FROM registry.fedoraproject.org/fedora:38
-RUN dnf -y install jq postgresql redis pgbouncer && dnf clean all
+FROM docker.io/alpine:3
+RUN apk add --no-cache bash jq postgresql redis pgbouncer ca-certificates
 
 WORKDIR /app
 COPY bin/ .
