@@ -40,7 +40,7 @@ spec:
         secretKeyRef:
           name: DBSECRET
           key: db.name
-    image: quay.io/jlindgren/consoledot-debugger:master
+    image: IMAGE
     name: db-debugger
     resources:
       limits:

@@ -1,10 +1,9 @@
-IMAGE=quay.io/jlindgren/consoledot-debugger:latest 
+CONT_EXEC=docker
 
 all: push
 
 push:
-	podman build . -t ${IMAGE}
-	podman push ${IMAGE}
+	bash scripts/console-debugger.sh build
 
 debug:
-	bash run.sh ${DBSECRET}
+	bash scripts/console-debugger.sh run ${DBSECRET}
