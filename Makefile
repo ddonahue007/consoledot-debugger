@@ -1,5 +1,3 @@
-CONT_EXEC=docker
-
 all: push
 
 push:
