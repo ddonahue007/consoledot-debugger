@@ -3,7 +3,8 @@
 ## Overview
 This tool will deploy a pod onto the cluster in the current namspace|project. 
 Once this pod has been deployed you are automatically logged into the pod. 
-The tools provided by this pod alow access to the database, redis and others.
+The tools provided by this pod allow access to the database, redis and other 
+applications for easy debugging.
 
 ### Requirements
 - [Docker](https://docs.docker.com/engine/install/) or [podman](https://podman.io/getting-started/installation)
@@ -31,26 +32,23 @@ export IMAGE="quay.io/bilbo/consoledot-debugger:latest"
 ```
 
 ### login to cluster and set project context
-You must log into the cluster that you would like to debug and retrieve your 
+You must log into the cluster and retrieve your 
 login token. Once you have run that command in a terminal and are 
-able to run oc|kubectl commands you are ready to move on.
+able to run `oc|kubectl` commands you are ready to move on.
 
-- get list of projects
-```shell
-oc projects
-```
-- Switch to the project you are going to debug
-```shell
-oc project <name of project>
-```
 
-### Ruilding
+### Building
 - build debugger image
 ```shell
 make all
 ```
 
 ### Running
+- Find and switch to the project you are going to debug
+```shell
+oc projects
+oc project <name of project>
+```
 - retrieve the db secret name for you project|namespace (exanple using oc command)
 ```shell
 oc get secret 
@@ -63,13 +61,12 @@ You will be placed into the pod with a prompt like below:
 ```shell
 db-debug:/app$
 ```
-
 - exit the pod by hitting `Control D`
 ```shell
 db-debug:/app$^D
 ```
-The pod should automatically be removed from the cluster,but if not you can 
-run the following command.
+The pod should automatically be removed from the cluster, but if not run 
+the following command to clean up.
 ```shell
 oc delete pod db-debug
 ```
