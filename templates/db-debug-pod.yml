@@ -40,6 +40,8 @@ spec:
         secretKeyRef:
           name: DBSECRET
           key: db.name
+    - name: ACG_CONFIG
+      value: /cdapp/cdappconfig.json
     image: IMAGE
     name: db-debugger
     resources:
@@ -53,4 +55,17 @@ spec:
     stdinOnce: true
     tty: true
     imagePullPolicy: Always
+    volumeMounts:
+    - mountPath: /tmp
+      name: rds-client-ca
+    - mountPath: /cdapp/
+      name: config-secret
   restartPolicy: Never
+  volumes:
+  - emptyDir: {}
+    name: rds-client-ca
+  - name: config-secret
+    secret:
+      optional: true
+      defaultMode: 420
+      secretName: CLOWDAPP

@@ -53,7 +53,7 @@ run() {
   fi
 
   cat ./templates/db-debug-pod.yml |
-  sed "s|DBSECRET|${1}|g;s|IMAGE|${IMAGE}|g"| ${KUBE_CLI_CMD} create -f -
+  sed "s|DBSECRET|${1}|g;s|IMAGE|${IMAGE}|g;s|CLOWDAPP|${CLOWDAPP}|g"| ${KUBE_CLI_CMD} create -f -
 
   log-debug "${KUBE_CLI_CMD} wait --for=condition=Ready pod/db-debug"
   ${KUBE_CLI_CMD} wait --for=condition=Ready pod/db-debug
