@@ -52,8 +52,10 @@ run() {
     exit 1
   fi
 
+  clowdapp=$(head -c -4 <<< $1)
+
   cat ./templates/db-debug-pod.yml |
-  sed "s|DBSECRET|${1}|g;s|IMAGE|${IMAGE}|g;s|CLOWDAPP|${CLOWDAPP}|g"| ${KUBE_CLI_CMD} create -f -
+  sed "s|DBSECRET|${1}|g;s|IMAGE|${IMAGE}|g;s|CLOWDAPP|${clowdapp}|g"| ${KUBE_CLI_CMD} create -f -
 
   log-debug "${KUBE_CLI_CMD} wait --for=condition=Ready pod/db-debug"
   ${KUBE_CLI_CMD} wait --for=condition=Ready pod/db-debug
