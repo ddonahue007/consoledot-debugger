@@ -31,6 +31,9 @@ IMAGE=${IMAGE:-quay.io/jlindgren/consoledot-debugger:latest}
 # default: 'podman'
 CONTAINER_CMD=${CONTAINER_CMD:-podman}
 
+# default: 'db-debug'
+POD_NAME=${POD_NAME:-db-debug}
+
 build(){
   if [ "${CONTAINER_CMD}" = "podman" ]; then
     log-info "building with podman..."
@@ -55,13 +58,13 @@ run() {
   clowdapp=$(head -c -4 <<< $1)
 
   cat ./templates/db-debug-pod.yml |
-  sed "s|DBSECRET|${1}|g;s|IMAGE|${IMAGE}|g;s|CLOWDAPP|${clowdapp}|g"| ${KUBE_CLI_CMD} create -f -
+  sed "s|DBSECRET|${1}|g;s|IMAGE|${IMAGE}|g;s|POD_NAME|${POD_NAME}|g;s|CLOWDAPP|${clowdapp}|g"| ${KUBE_CLI_CMD} create -f -
 
-  log-debug "${KUBE_CLI_CMD} wait --for=condition=Ready pod/db-debug"
-  ${KUBE_CLI_CMD} wait --for=condition=Ready pod/db-debug
+  log-debug "${KUBE_CLI_CMD} wait --for=condition=Ready pod/${POD_NAME}"
+  ${KUBE_CLI_CMD} wait --for=condition=Ready pod/"${POD_NAME}"
 
-  log-debug "${KUBE_CLI_CMD} exec -it db-debug -- bash"
-  ${KUBE_CLI_CMD} exec -it db-debug -- bash
+  log-debug "${KUBE_CLI_CMD} exec -it ${POD_NAME} -- bash"
+  ${KUBE_CLI_CMD} exec -it "${POD_NAME}" -- bash
 
   log-debug "${KUBE_CLI_CMD} delete -f ./templates/db-debug-pod.yml --wait=false"
   ${KUBE_CLI_CMD} delete -f ./templates/db-debug-pod.yml --wait=false
@@ -71,7 +74,7 @@ run() {
 # execute
 #
 case ${CMD} in
-  "run") run ${2} ;;
+  "run") run "${2}" ;;
   "build") build ;;
   "help") usage ;;
    *) usage ;;

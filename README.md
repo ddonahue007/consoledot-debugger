@@ -31,6 +31,11 @@ export CONTAINER_CMD="docker"
 export IMAGE="quay.io/bilbo/consoledot-debugger:latest"
 ```
 
+- POD_NAME (default: db-debug)
+```shell
+export POD_NAME="bilbo-db-debug"
+```
+
 ### login to cluster and set project context
 You must log into the cluster and retrieve your 
 login token. Once you have run that command in a terminal and are 
