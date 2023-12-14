@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   annotations:
     openshift.io/scc: anyuid
-  name: db-debug
+  name: POD_NAME
 spec:
   securityContext:
     runAsUser: 1000
@@ -43,7 +43,7 @@ spec:
     - name: ACG_CONFIG
       value: /cdapp/cdappconfig.json
     image: IMAGE
-    name: db-debugger
+    name: POD_NAME
     resources:
       limits:
         cpu: 500m
