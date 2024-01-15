@@ -67,7 +67,8 @@ run() {
   ${KUBE_CLI_CMD} exec -it "${POD_NAME}" -- bash
 
   log-debug "${KUBE_CLI_CMD} delete -f ./templates/db-debug-pod.yml --wait=false"
-  ${KUBE_CLI_CMD} delete -f ./templates/db-debug-pod.yml --wait=false
+  cat ./templates/db-debug-pod.yml |
+  sed "s|DBSECRET|${1}|g;s|IMAGE|${IMAGE}|g;s|POD_NAME|${POD_NAME}|g;s|CLOWDAPP|${clowdapp}|g"| ${KUBE_CLI_CMD} delete -f - --wait=false
 }
 
 #
