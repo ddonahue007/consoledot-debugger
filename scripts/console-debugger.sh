@@ -55,7 +55,7 @@ run() {
     exit 1
   fi
 
-  clowdapp=$(head -c -4 <<< $1)
+  clowdapp=${1//-db//}
 
   cat ./templates/db-debug-pod.yml |
   sed "s|DBSECRET|${1}|g;s|IMAGE|${IMAGE}|g;s|POD_NAME|${POD_NAME}|g;s|CLOWDAPP|${clowdapp}|g"| ${KUBE_CLI_CMD} create -f -
