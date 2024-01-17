@@ -49,6 +49,12 @@ make all
 ```
 
 ### Running
+Note: If you want more debug output from this tool set teh following environment
+variable.
+```shell
+export VERBOSE=true
+```
+
 - Find and switch to the project you are going to debug
 ```shell
 oc projects

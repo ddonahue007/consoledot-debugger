@@ -3,11 +3,14 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+# Optional environment variable(s)
+#   - VERBOSE=true|false (default is false)
+
 SCRIPTS_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 PROJECT_DIR="${SCRIPTS_DIR}/.."
 
 CMD=${1:-help}
-export VERBOSE=${VERBOSE:-""}
+VERBOSE=${VERBOSE:-false}
 
 # import common & logging
 source "${SCRIPTS_DIR}"/common/logging.sh
@@ -55,7 +58,14 @@ run() {
     exit 1
   fi
 
-  clowdapp=${1//-db//}
+  clowdapp=${1//-db/}
+  log-debug "clowdapp=${clowdapp}"
+
+  log-debug "Using the follow settings:"
+  log-debug "KUBE_CLI_CMD=${KUBE_CLI_CMD}"
+  log-debug "CONTAINER_CMD=${CONTAINER_CMD}"
+  log-debug "IMAGE=${IMAGE}"
+  log-debug "POD_NAME=${POD_NAME}"
 
   cat ./templates/db-debug-pod.yml |
   sed "s|DBSECRET|${1}|g;s|IMAGE|${IMAGE}|g;s|POD_NAME|${POD_NAME}|g;s|CLOWDAPP|${clowdapp}|g"| ${KUBE_CLI_CMD} create -f -
